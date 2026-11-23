@@ -1,0 +1,142 @@
+:root { --motion-ease: cubic-bezier(.22, .68, .24, 1); --motion-fast: 180ms; --motion-enter: 460ms; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .motion-hero-text, .motion-hero-image, [data-motion].motion-revealed {
+    animation: motion-arrive var(--motion-enter) var(--motion-ease) var(--motion-delay, 0ms) both;
+  }
+  .motion-hero-text { --motion-y: 12px; }
+  .motion-hero-image { --motion-scale: .985; --motion-start: .72; --motion-enter: 620ms; }
+  [data-motion="text"] { --motion-y: 9px; }
+  [data-motion="card"] { --motion-y: 8px; --motion-start: .82; }
+  [data-motion="image-left"] { --motion-x: 6px; --motion-scale: .99; }
+  [data-motion="image-right"] { --motion-x: -6px; --motion-scale: .99; }
+  [data-motion="article-image"] { --motion-scale: .99; --motion-start: .88; }
+  @keyframes motion-arrive {
+    from { opacity: var(--motion-start, .72); translate: var(--motion-x, 0px) var(--motion-y, 0px); scale: var(--motion-scale, 1); }
+    to { opacity: 1; translate: none; scale: none; }
+  }
+
+  .reference-surface .t-slide.active,
+  .reference-surface .t-slide-wrapper.active,
+  .reference-surface .review-slide.active,
+  .reference-surface .trans-content[style*="display: block"],
+  .reference-surface .modal-overlay[style*="display: flex"] .modal-content,
+  #root dialog[open] {
+    animation: motion-arrive 270ms var(--motion-ease) both;
+  }
+
+  .reference-surface .site-header { transition: box-shadow 260ms var(--motion-ease); }
+  .reference-surface .site-header.motion-header-scrolled { box-shadow: 0 4px 14px #0000000d; }
+  .reference-surface :is(.desktop-nav, .site-footer, .mobile-nav) a {
+    text-decoration-color: transparent;
+    text-underline-offset: .26em;
+    transition: color var(--motion-fast) ease, text-decoration-color 230ms ease;
+  }
+  .reference-surface :is(.desktop-nav, .site-footer, .mobile-nav) a:is(:hover, :focus-visible) {
+    text-decoration-line: underline;
+    text-decoration-color: currentColor;
+  }
+  .reference-surface :is(.faq-icon, .m-icon, .sub-icon, .menu-toggle svg, .close-menu, .arrow) {
+    transition: transform 250ms var(--motion-ease), rotate 250ms var(--motion-ease);
+  }
+  .reference-surface .faq-item.active .faq-icon { rotate: 180deg; }
+  .reference-surface .menu-toggle[aria-expanded="true"] svg { rotate: 8deg; }
+  .reference-surface .faq-answer { transition-timing-function: var(--motion-ease); }
+
+  .clinic-blog-card {
+    transition: transform 240ms var(--motion-ease), border-color 240ms ease, box-shadow 240ms ease;
+  }
+  .clinic-blog-card:focus-within {
+    border-color: #bc517c;
+    box-shadow: 0 6px 20px #64253c14;
+  }
+  .clinic-blog-image img { transition: transform 380ms var(--motion-ease); }
+  .clinic-blog-read, .clinic-local-links a {
+    transition: color 180ms ease, text-underline-offset 180ms var(--motion-ease);
+  }
+  .clinic-blog-card a:focus-visible .clinic-blog-read,
+  .clinic-local-links a:focus-visible { text-underline-offset: .32em; }
+  .clinic-page-action {
+    transition: background-color 180ms ease, border-color 180ms ease, scale 180ms var(--motion-ease);
+  }
+  .clinic-page-action:active:not(:disabled) { scale: .98; }
+  .clinic-consultation-form :is(input, select) {
+    transition: border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  #root :is(.btn-primary, .btn-secondary, .button, .tab-btn, .case-tabs button, .case-arrow, .case-reveal, .trans-arrow, .nav-arrow, .menu-toggle) {
+    transition: translate var(--motion-fast) var(--motion-ease), scale var(--motion-fast) var(--motion-ease),
+      color var(--motion-fast) ease, background-color var(--motion-fast) ease, border-color var(--motion-fast) ease,
+      box-shadow var(--motion-fast) ease, outline-offset var(--motion-fast) ease, transform var(--motion-fast) var(--motion-ease);
+  }
+  #root :is(.btn-primary, .btn-secondary, .button, .tab-btn, .case-tabs button, .case-reveal, .menu-toggle):active { scale: .985; }
+  #root :is(.case-arrow, .trans-arrow, .nav-arrow):active { scale: .95; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .clinic-blog-card:hover {
+      transform: translateY(-3px);
+      border-color: #e0adbf;
+      box-shadow: 0 8px 24px #64253c14;
+    }
+    .clinic-blog-card:hover img { transform: scale(1.035); }
+    .clinic-blog-card:hover .clinic-blog-read,
+    .clinic-local-links a:hover { text-underline-offset: .32em; }
+    .clinic-page-action:hover:not(:disabled) { background-color: #a60048; border-color: #a60048; }
+    #root :is(.procedure-card, .blog-card, .related-card, .type-card, .clinic-card, .directory > a) {
+      transition: transform 260ms var(--motion-ease), box-shadow 260ms var(--motion-ease), border-color 260ms ease;
+    }
+    #root :is(.procedure-card, .blog-card, .related-card, .type-card, .clinic-card, .directory > a):hover { transform: translateY(-3px); }
+    #root :is(.procedure-card, .blog-card, .related-card, .type-card, .clinic-card) img { transition: scale 320ms var(--motion-ease), clip-path 320ms var(--motion-ease); clip-path: inset(0); }
+    #root :is(.procedure-card, .blog-card, .related-card, .type-card, .clinic-card):hover img { scale: 1.02; clip-path: inset(1%); }
+    .reference-surface :is(.btn-primary, .btn-secondary, .case-reveal):hover { translate: 0 -2px; }
+    .reference-surface :is(.text-link, .read-link, .case-all-link, .social-link) { transition: translate 220ms var(--motion-ease); }
+    .reference-surface :is(.text-link, .read-link, .case-all-link, .social-link):hover { translate: 2px 0; }
+  }
+
+  @supports (transition-behavior: allow-discrete) {
+    .reference-surface :is(.dropdown-menu-level1, .dropdown-menu-level2, .mobile-drop-content, .mobile-sub-content) {
+      opacity: 0; translate: 0 -4px;
+      transition: opacity 170ms ease, translate 220ms var(--motion-ease), display 220ms allow-discrete;
+    }
+    .reference-surface :is(.nav-dropdown-hierarchical:hover > .dropdown-menu-level1, .dropdown-submenu:hover > .dropdown-menu-level2,
+      .mobile-dropdown.active > .mobile-drop-content, .mobile-sub-dropdown.active > .mobile-sub-content) { opacity: 1; translate: none; }
+    @starting-style {
+      .reference-surface :is(.nav-dropdown-hierarchical:hover > .dropdown-menu-level1, .dropdown-submenu:hover > .dropdown-menu-level2,
+        .mobile-dropdown.active > .mobile-drop-content, .mobile-sub-dropdown.active > .mobile-sub-content) { opacity: 0; translate: 0 -4px; }
+    }
+    .reference-surface :is(.dropdown-menu-level1, .dropdown-menu-level2) { pointer-events: none; }
+    .reference-surface :is(.nav-dropdown-hierarchical:hover > .dropdown-menu-level1, .dropdown-submenu:hover > .dropdown-menu-level2) { pointer-events: auto; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #root *, #root *::before, #root *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.reference-image-missing {
+  min-height: 72px;
+  width: 100%;
+  background: #fbf3f6;
+  color: #663649;
+  text-align: center;
+  align-content: center;
+  font-size: .85rem;
+}
+.reference-image-missing:not(.t-slide) { display: block; }
+
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root), ::view-transition-new(root) {
+    animation-duration: 240ms;
+    animation-timing-function: var(--motion-ease);
+  }
+  .reference-surface .mobile-nav { transition-timing-function: var(--motion-ease); }
+  .reference-surface .mobile-nav.open .close-menu { rotate: 90deg; }
+  .reference-surface .mobile-nav-overlay { transition-timing-function: var(--motion-ease); }
+}

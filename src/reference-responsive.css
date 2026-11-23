@@ -1,0 +1,51 @@
+.reference-surface .s-why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.reference-surface .s-why-card { overflow-wrap: anywhere; }
+.reference-surface .mobile-nav {
+  box-sizing: border-box;
+  width: min(320px, 88vw);
+  height: 100dvh;
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  overscroll-behavior: contain;
+}
+.reference-surface .mobile-nav:not(.open) { visibility: hidden; }
+.reference-surface .mobile-nav :is(a, button) { min-height: 44px; }
+.reference-surface .mobile-nav a { display: flex; align-items: center; }
+.reference-surface .menu-toggle, .reference-surface .close-menu {
+  min-width: 44px;
+  min-height: 44px;
+}
+.reference-surface #bookingModal .modal-content {
+  max-width: calc(100% - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.reference-surface #bookingModal :is(input:not([type="checkbox"]), select) {
+  min-width: 0;
+  min-height: 44px;
+  font-size: 16px !important;
+}
+
+@media (min-width: 1024px) {
+  .reference-surface .s-why-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  .reference-surface .desktop-nav { gap: clamp(12px, 2vw, 22px); }
+  .reference-surface .header-center { padding-right: clamp(10px, 2vw, 22px); }
+  .reference-surface .hero-container { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
+  .reference-surface .hero-image { margin-right: 0; min-width: 0; }
+  .reference-surface .hero-image img { transform: none; }
+  .reference-surface .hero h1 { font-size: clamp(34px, 4.6vw, 50px); }
+}
+@media (max-width: 767px) {
+  .reference-surface .transformation-tabs { flex-wrap: wrap; gap: 8px; }
+  .reference-surface .transformation-tabs .tab-btn { min-height: 44px; white-space: normal; }
+  .reference-surface .fixed-bottom-bar { padding-bottom: env(safe-area-inset-bottom); background: #fff; }
+  #root:has(.fixed-bottom-bar) .clinic-chat { --chat-bottom-bar: 58px; }
+  body:has(.fixed-bottom-bar) > #kenytChatBubble {
+    bottom: calc(52px + env(safe-area-inset-bottom)) !important;
+  }
+}
+@media (max-width: 460px) {
+  .reference-surface .s-why-grid { grid-template-columns: minmax(0, 1fr); }
+}

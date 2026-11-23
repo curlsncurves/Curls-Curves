@@ -1,0 +1,11 @@
+/data
+/reference
+/node_modules
+/dist
+/.git
+/.github
+/.vercel
+.env*
+*.zip
+*.sqlite*
+__pycache__

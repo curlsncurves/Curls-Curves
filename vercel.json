@@ -1,0 +1,107 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/api/health",
+      "destination": "/api/index?endpoint=health"
+    },
+    {
+      "source": "/api/consultations",
+      "destination": "/api/index?endpoint=consultations"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/index?endpoint=unavailable"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog-pages/:slug.html"
+    },
+    {
+      "source": "/",
+      "destination": "/local-pages/home.html"
+    },
+    {
+      "source": "/about-doctor.php",
+      "destination": "/local-pages/about-doctor.php.html"
+    },
+    {
+      "source": "/liposuction-in-bangalore",
+      "destination": "/local-pages/liposuction-in-bangalore.html"
+    },
+    {
+      "source": "/tummy-tuck-in-bangalore",
+      "destination": "/local-pages/tummy-tuck-in-bangalore.html"
+    },
+    {
+      "source": "/gynecomastia-surgery-in-bangalore",
+      "destination": "/local-pages/gynecomastia-surgery-in-bangalore.html"
+    },
+    {
+      "source": "/silicone-breast-implants-in-bangalore",
+      "destination": "/local-pages/silicone-breast-implants-in-bangalore.html"
+    },
+    {
+      "source": "/service-rhinoplasty.php",
+      "destination": "/local-pages/service-rhinoplasty.php.html"
+    },
+    {
+      "source": "/hair-transplantation-in-bangalore",
+      "destination": "/local-pages/hair-transplantation-in-bangalore.html"
+    },
+    {
+      "source": "/index.php",
+      "destination": "/local-pages/home.html"
+    },
+    {
+      "source": "/((?!api(?:/|$)|assets/|images/|blog-pages/|local-pages/|media/|reference-site/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/blog/meet-dr-girish",
+      "destination": "/blog/dr-girish-ac-plastic-cosmetic-surgeon-bengaluru",
+      "permanent": true
+    },
+    {
+      "source": "/blog/dr-girish-surgical-training",
+      "destination": "/blog/dr-girish-ac-qualifications-professional-journey",
+      "permanent": true
+    },
+    {
+      "source": "/blog/cosmetic-surgery-awareness",
+      "destination": "/blog/dr-girish-ac-cosmetic-surgery-awareness-online",
+      "permanent": true
+    },
+    {
+      "source": "/blog/hair-transplant-fue-fut-recovery",
+      "destination": "/blog/hair-transplant-bengaluru-fue-fut-recovery",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gynecomastia-causes-options-recovery",
+      "destination": "/blog/gynecomastia-surgery-bengaluru-causes-recovery",
+      "permanent": true
+    },
+    {
+      "source": "/blog/liposuction-body-contouring",
+      "destination": "/blog/liposuction-bengaluru-body-contouring-not-weight-loss",
+      "permanent": true
+    },
+    {
+      "source": "/blog/rhinoplasty-vs-septoplasty",
+      "destination": "/blog/rhinoplasty-vs-septoplasty-bengaluru",
+      "permanent": true
+    },
+    {
+      "source": "/blog/breast-augmentation-vs-reduction",
+      "destination": "/blog/breast-augmentation-reduction-bengaluru-guide",
+      "permanent": true
+    }
+  ]
+}

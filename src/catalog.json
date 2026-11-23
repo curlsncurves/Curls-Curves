@@ -1,0 +1,554 @@
+{
+  "procedures": [
+    {
+      "slug": "3d-liposuction",
+      "title": "3D Liposuction",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "abdomen-liposuction",
+      "title": "Abdomen Liposuction",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "abdominoplasty",
+      "title": "Abdominoplasty",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "arm-lift",
+      "title": "Arm Lift",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "arm-liposuction",
+      "title": "Arm Liposuction",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "axillary-breast-tissue-removal",
+      "title": "Axillary Breast Tissue Removal",
+      "category": "BREAST SURGERY"
+    },
+    {
+      "slug": "back-liposuction",
+      "title": "Back Liposuction",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "beard-transplantation",
+      "title": "Beard Transplantation",
+      "category": "HAIR RESTORATION"
+    },
+    {
+      "slug": "blepharoplasty",
+      "title": "Blepharoplasty",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "breast-augmentation-by-fat-grafting",
+      "title": "Breast Augmentation by Fat Grafting",
+      "category": "BREAST SURGERY"
+    },
+    {
+      "slug": "breast-augmentation",
+      "title": "Breast Augmentation",
+      "category": "BREAST SURGERY"
+    },
+    {
+      "slug": "breast-lift",
+      "title": "Breast Lift",
+      "category": "BREAST SURGERY"
+    },
+    {
+      "slug": "breast-reduction",
+      "title": "Breast Reduction",
+      "category": "BREAST SURGERY"
+    },
+    {
+      "slug": "brow-lift",
+      "title": "Brow Lift",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "buttock-fat-grafting",
+      "title": "Buttock Fat Grafting",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "chin-augmentation",
+      "title": "Chin Augmentation",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "deep-plane-facelift-facial-rejuvenation",
+      "title": "Deep Plane Facelift & Facial Rejuvenation",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "deviated-septum",
+      "title": "Deviated Septum",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "dimple-creation",
+      "title": "Dimple Creation",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "eyebrow-hair-transplant",
+      "title": "Eyebrow Hair Transplant",
+      "category": "HAIR RESTORATION"
+    },
+    {
+      "slug": "face-liposuction",
+      "title": "Face Liposuction",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "fat-grafting-surgery",
+      "title": "Fat Grafting Surgery",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "female-hair-transplant",
+      "title": "Female Hair Transplant",
+      "category": "HAIR RESTORATION"
+    },
+    {
+      "slug": "female-rhinoplasty",
+      "title": "Female Rhinoplasty",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "fue-hair-transplant",
+      "title": "FUE Hair Transplant",
+      "category": "HAIR RESTORATION"
+    },
+    {
+      "slug": "full-facelift",
+      "title": "Full Facelift",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "functional-rhinoplasty",
+      "title": "Functional Rhinoplasty",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "gynecomastia",
+      "title": "Gynecomastia",
+      "category": "BREAST SURGERY"
+    },
+    {
+      "slug": "hair-transplantation",
+      "title": "Hair Transplantation",
+      "category": "HAIR RESTORATION"
+    },
+    {
+      "slug": "hd-liposuction",
+      "title": "HD Liposuction",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "hip-dip-correction",
+      "title": "Hip Dip Correction",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "hymenoplasty-surgery",
+      "title": "Hymenoplasty Surgery",
+      "category": "INTIMATE SURGERY"
+    },
+    {
+      "slug": "inverted-nipple-surgery",
+      "title": "Inverted Nipple Surgery",
+      "category": "BREAST SURGERY"
+    },
+    {
+      "slug": "jawline-contouring",
+      "title": "Jawline Contouring",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "labia-majora-augmentation",
+      "title": "Labia Majora Augmentation",
+      "category": "INTIMATE SURGERY"
+    },
+    {
+      "slug": "labiaplasty",
+      "title": "Labiaplasty",
+      "category": "INTIMATE SURGERY"
+    },
+    {
+      "slug": "lip-lift",
+      "title": "Lip Lift",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "lipoma-surgery",
+      "title": "Lipoma Surgery",
+      "category": "OTHER PROCEDURES"
+    },
+    {
+      "slug": "liposuction",
+      "title": "Liposuction",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "lower-body-lift",
+      "title": "Lower Body Lift",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "male-hair-transplant",
+      "title": "Male Hair Transplant",
+      "category": "HAIR RESTORATION"
+    },
+    {
+      "slug": "male-rhinoplasty",
+      "title": "Male Rhinoplasty",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "mini-facelift",
+      "title": "Mini Facelift",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "mommy-makeover",
+      "title": "Mommy Makeover",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "moustache-transplantation",
+      "title": "Moustache Transplantation",
+      "category": "HAIR RESTORATION"
+    },
+    {
+      "slug": "neck-lift",
+      "title": "Neck Lift",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "otoplasty",
+      "title": "Otoplasty",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "post-bariatric-surgery",
+      "title": "Post-Bariatric Surgery",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "primary-rhinoplasty",
+      "title": "Primary Rhinoplasty",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "revision-rhinoplasty",
+      "title": "Revision Rhinoplasty",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "rhinoplasty",
+      "title": "Rhinoplasty",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "septoplasty",
+      "title": "Septoplasty",
+      "category": "FACE SURGERY"
+    },
+    {
+      "slug": "silicone-breast-implants",
+      "title": "Silicone Breast Implants",
+      "category": "BREAST SURGERY"
+    },
+    {
+      "slug": "thigh-liposuction",
+      "title": "Thigh Liposuction",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "thighplasty",
+      "title": "Thighplasty",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "tummy-tuck",
+      "title": "Tummy Tuck",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "ultrasonic-liposuction",
+      "title": "Ultrasonic Liposuction",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "upper-body-lift",
+      "title": "Upper Body Lift",
+      "category": "BODY CONTOURING"
+    },
+    {
+      "slug": "vagina-tightening-surgery",
+      "title": "Vagina Tightening Surgery",
+      "category": "INTIMATE SURGERY"
+    }
+  ],
+  "guides": [
+    {
+      "slug": "asian-blepharoplasty-double-eyelid-surgery",
+      "title": "Asian Blepharoplasty (Double Eyelid Surgery)",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "blepharoplasty",
+      "title": "Blepharoplasty",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "breast-augmentation",
+      "title": "Breast Augmentation",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "brow-lift-forehead-lift",
+      "title": "Brow Lift & Forehead Lift",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "cheek-liposuction",
+      "title": "Cheek Liposuction",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "chin-implant-surgery",
+      "title": "Chin Implant Surgery",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "corner-lip-lift",
+      "title": "Corner Lip Lift",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "deep-plane-facelift",
+      "title": "Deep Plane Facelift",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "deviated-septum",
+      "title": "Deviated Septum",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "double-chin-liposuction",
+      "title": "Double Chin Liposuction",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "face-liposuction",
+      "title": "Face Liposuction",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "fat-grafting-surgery",
+      "title": "Fat Grafting Surgery",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "female-rhinoplasty",
+      "title": "Female Rhinoplasty",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "full-face-lift",
+      "title": "Full Face Lift",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "functional-nasal-surgery",
+      "title": "Functional Nasal Surgery",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "functional-rhinoplasty",
+      "title": "Functional Rhinoplasty",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "jawline-contouring",
+      "title": "Jawline Contouring",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "lip-augmentation",
+      "title": "Lip Augmentation",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "lip-lift",
+      "title": "Lip Lift",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "lip-reduction",
+      "title": "Lip Reduction",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "lower-blepharoplasty",
+      "title": "Lower Blepharoplasty",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "male-rhinoplasty",
+      "title": "Male Rhinoplasty",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "mini-face-lift",
+      "title": "Mini Face Lift",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "neck-contouring",
+      "title": "Neck Contouring",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "neck-face-lift",
+      "title": "Neck & Face Lift",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "neck-jawline-lift",
+      "title": "Neck & Jawline Lift",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "neck-lift",
+      "title": "Neck Lift",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "otoplasty",
+      "title": "Otoplasty",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "primary-rhinoplasty",
+      "title": "Primary Rhinoplasty",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "revision-rhinoplasty",
+      "title": "Revision Rhinoplasty",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "septoplasty",
+      "title": "Septoplasty",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "silicone-breast-implants",
+      "title": "Silicone Breast Implants",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "surgical-lip-augmentation",
+      "title": "Surgical Lip Augmentation",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "upper-blepharoplasty",
+      "title": "Upper Blepharoplasty",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    },
+    {
+      "slug": "upper-lip-lift",
+      "title": "Upper Lip Lift",
+      "category": "PROCEDURE DESIGN REFERENCE"
+    }
+  ],
+  "clinic": [
+    {
+      "file": "clinic-00.webp",
+      "alt": "Clinic building and street view"
+    },
+    {
+      "file": "clinic-01.webp",
+      "alt": "Clinic entrance"
+    },
+    {
+      "file": "clinic-02.webp",
+      "alt": "Reception and patient seating"
+    },
+    {
+      "file": "clinic-03.webp",
+      "alt": "Lift lobby"
+    },
+    {
+      "file": "clinic-04.webp",
+      "alt": "First-floor corridor"
+    },
+    {
+      "file": "clinic-05.webp",
+      "alt": "Waiting area and entrance"
+    },
+    {
+      "file": "clinic-06.webp",
+      "alt": "Patient seating near lift"
+    },
+    {
+      "file": "clinic-07.webp",
+      "alt": "Reception desk and waiting room"
+    },
+    {
+      "file": "clinic-08.webp",
+      "alt": "Operation theatre"
+    },
+    {
+      "file": "clinic-09.webp",
+      "alt": "Private-room corridor"
+    },
+    {
+      "file": "clinic-11.webp",
+      "alt": "Clinic frontage"
+    },
+    {
+      "file": "clinic-12.webp",
+      "alt": "Lift and patient seating"
+    },
+    {
+      "file": "clinic-13.webp",
+      "alt": "Building and main entrance"
+    },
+    {
+      "file": "clinic-14.webp",
+      "alt": "Consultation room"
+    },
+    {
+      "file": "clinic-17.webp",
+      "alt": "Reception lounge"
+    },
+    {
+      "file": "lift-lobby-new.webp",
+      "alt": "Lift lobby and clinic access"
+    },
+    {
+      "file": "reception-lounge-new.webp",
+      "alt": "Reception and patient waiting lounge"
+    },
+    {
+      "file": "consultation-room-new.webp",
+      "alt": "Consultation and examination room"
+    },
+    {
+      "file": "consultation-room-second.webp",
+      "alt": "Consultation room and examination couch"
+    }
+  ]
+}
