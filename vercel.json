@@ -6,18 +6,6 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/api/health",
-      "destination": "/api/index?endpoint=health"
-    },
-    {
-      "source": "/api/consultations",
-      "destination": "/api/index?endpoint=consultations"
-    },
-    {
-      "source": "/api/:path*",
-      "destination": "/api/index?endpoint=unavailable"
-    },
-    {
       "source": "/blog/:slug",
       "destination": "/blog-pages/:slug.html"
     },

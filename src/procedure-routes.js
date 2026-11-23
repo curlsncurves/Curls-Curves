@@ -24,3 +24,8 @@ export function catalogProcedure(path) {
   const slug = path.replace(/\/$/, '').replace(/\.html$/, '').match(/^\/procedure\/([^/]+)$/)?.[1];
   return catalog.procedures.find(item => item.slug === slug);
 }
+
+export function procedureForPublishedPath(path) {
+  const normalized = path.replace(/\/$/, '');
+  return catalog.procedures.find(item => procedurePath(item.slug) === normalized);
+}

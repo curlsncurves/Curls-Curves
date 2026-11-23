@@ -6,13 +6,11 @@
     "dev": "node server/index.js --dev",
     "build": "vite build",
     "start": "node server/index.js",
-    "requests": "node server/requests.js",
     "preview:cases": "node server/index.js --local-case-gallery",
     "test": "node --test"
   },
   "type": "module",
   "dependencies": {
-    "@neondatabase/serverless": "^1.2.1",
     "express": "^5.3.0",
     "html-react-parser": "^6.1.10",
     "react": "^19.3.1",
@@ -20,7 +18,6 @@
     "react-router-dom": "^7.18.6"
   },
   "devDependencies": {
-    "@electric-sql/pglite": "^0.6.0",
     "cheerio": "^1.2.0",
     "vite": "^8.3.8"
   },

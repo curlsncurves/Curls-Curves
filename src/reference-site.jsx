@@ -8,7 +8,8 @@ import { useSiteMotion } from './site-motion.js';
 import { prepareReferencePage } from './reference-loading.js';
 import missingImages from './missing-reference-images.json';
 import ClinicPage, { brandedPage } from './clinic-pages.jsx';
-import { catalogProcedure, procedurePath } from './procedure-routes.js';
+import ConsultationForm from './consultation-form.jsx';
+import { catalogProcedure, procedureForPublishedPath, procedurePath } from './procedure-routes.js';
 import { findLocalPage, localPages } from './local-seo.js';
 import CaseGallery, { caseProcedure } from './case-gallery.jsx';
 import ProcedureEducation from './procedure-education.jsx';
@@ -170,36 +171,6 @@ export default function ReferenceSite({ source, initialPage }) {
     }
   }
 
-  async function submit(event) {
-    event.preventDefault();
-    const form = event.target;
-    if (!form.matches('#bookingModal form')) return;
-    const button = form.querySelector('button[type="submit"]');
-    if (button?.disabled) return;
-    const result = form.querySelector('[role="status"]');
-    const fields = new FormData(form);
-    if (button) button.disabled = true;
-    if (result) result.textContent = 'Sending…';
-    try {
-      const response = await fetch('/api/consultations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: fields.get('name'), phone: fields.get('phone'), email: fields.get('email') || '',
-          topic: location.pathname.replace(/\/$/, ''), consent: fields.has('consent')
-        })
-      });
-      const request = await response.json();
-      if (!response.ok) throw new Error(request.message);
-      form.reset();
-      if (result) result.textContent = 'Request received. Reference ' + request.reference;
-    } catch (error) {
-      if (result) result.textContent = error instanceof TypeError ? 'Could not connect. Please try again or call the clinic.' : error.message;
-    } finally {
-      if (button) button.disabled = false;
-    }
-  }
-
   if (failed) return <p>Could not load this page. <a href="/">Return home</a></p>;
   if (!content) return null;
   const education = content.html.includes(placeholderOverview) ? educationFor(contentPath) : null;
@@ -208,7 +179,7 @@ export default function ReferenceSite({ source, initialPage }) {
   return <>
     <link rel="stylesheet" href={content.style} />
     {content.fonts.map(font => <link rel="stylesheet" key={font} href={font} />)}
-    <div className="reference-surface" style={{ display: 'contents' }} ref={surface} onClick={click} onSubmit={submit} onFocus={warmRoute} onPointerDown={warmRoute}
+    <div className="reference-surface" style={{ display: 'contents' }} ref={surface} onClick={click} onFocus={warmRoute} onPointerDown={warmRoute}
       onKeyDown={event => {
         if (event.key === 'Escape') close();
         if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('.close-modal')) {
@@ -260,13 +231,7 @@ export default function ReferenceSite({ source, initialPage }) {
           node.attribs['aria-label'] = 'Book your consultation';
         }
         if (node.name === 'form' && node.attribs.action?.endsWith('/process_booking.php')) {
-          node.attribs.action = '/api/consultations';
-          const { action } = node.attribs;
-          return <form key={index} method="post" action={action} style={{ display: 'flex', flexDirection: 'column', gap: 15 }}>
-            {parseFormFields(node)}
-            <label style={{ fontSize: 13 }}><input type="checkbox" name="consent" required /> I agree to be contacted about my consultation request.</label>
-            <p role="status" aria-live="polite" />
-          </form>;
+          return <ConsultationForm key={index} procedure={(catalogItem || procedureForPublishedPath(contentPath))?.slug} />;
         }
       }, transform(element, node, index) {
         if (localPage?.path === '/' && node.name === 'footer' && node.attribs?.class?.split(' ').includes('site-footer')) {
@@ -313,21 +278,4 @@ export default function ReferenceSite({ source, initialPage }) {
     </div>
   </>;
 
-  function parseFormFields(node) {
-    return node.children.filter(child => child.name === 'input' || child.name === 'button').map((child, index) => {
-      const { name, type, value, placeholder, required, class: className } = child.attribs;
-      if (child.name === 'button') return <button key={index} type="submit" className={className} style={{ padding: 14, border: 0 }}>{child.children[0]?.data}</button>;
-      if (type === 'hidden') return <input key={index} type="hidden" name={name} value={value} />;
-      return <input key={index} name={name} type={type} placeholder={placeholder} aria-label={placeholder} required={required != null}
-        style={{ padding: 12, border: '1px solid #ccc', borderRadius: 6, fontFamily: 'Inter, sans-serif' }} />;
-    });
-  }
-}
-
-function isProminentImage(node) {
-  for (let parent = node; parent; parent = parent.parent) {
-    const classes = parent.attribs?.class || '';
-    if (parent.name === 'header' || /(?:^|\s)(?:[\w-]+-)?hero(?:-[\w-]+)?(?:\s|$)/.test(classes)) return true;
-  }
-  return false;
 }
