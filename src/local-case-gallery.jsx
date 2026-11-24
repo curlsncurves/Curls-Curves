@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './local-case-gallery.css';
 
 const base = '/local-case-gallery/';
+const additionalProcedures = new Set([
+  'Breast Augmentation by Fat Grafting', 'Brow Lift', 'Buttock Fat Grafting',
+  'Chin Augmentation', 'Hip Dip Correction', 'Inverted Nipples',
+  'Labia Majora Augmentation', 'Labiaplasty', 'Thigh Liposuction',
+]);
 
 export default function LocalCaseGallery() {
   const [cases, setCases] = useState([]);
@@ -25,6 +30,7 @@ export default function LocalCaseGallery() {
 
   if (!cases.length) return null;
   const categories = [...new Set(cases.flatMap(item => item.procedures))].sort();
+  const additional = categories.filter(name => additionalProcedures.has(name));
   const active = categories.includes(procedure) ? procedure : categories[0];
   const matches = cases.filter(item => item.procedures.includes(active));
   const selected = matches[index];
@@ -34,12 +40,20 @@ export default function LocalCaseGallery() {
     <div className="container">
       <div className="local-case-heading">
         <div><h2 id="local-case-title">Before &amp; After Case Gallery</h2>
-          <p>{cases.length} comparisons across {categories.length} procedures · Local clinic review</p></div>
+          <p>{cases.length} comparisons across {categories.length} procedures · Local clinic review</p>
+          {additional.length > 0 && <p>Choose <strong>Additional procedures</strong> in the menu to see galleries beyond the featured tabs.</p>}</div>
         <label>Procedure<select value={active} onChange={event => {
           setProcedure(event.target.value);
           setIndex(0);
           setVisible(false);
-        }}>{categories.map(name => <option key={name}>{name}</option>)}</select></label>
+        }}>
+          <optgroup label="Featured procedure categories">
+            {categories.filter(name => !additionalProcedures.has(name)).map(name => <option key={name}>{name}</option>)}
+          </optgroup>
+          {additional.length > 0 && <optgroup label="Additional procedures">
+            {additional.map(name => <option key={name}>{name}</option>)}
+          </optgroup>}
+        </select></label>
       </div>
       <div className="local-case-stage">
         <h3>{active}</h3>
