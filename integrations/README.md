@@ -6,4 +6,6 @@
 4. Copy the deployed `/exec` URL to `VITE_CONSULTATION_SCRIPT_URL` in Vercel and redeploy. For local testing, set the same variable in `.env.local` and restart Vite. The website sends the form directly to Apps Script, which displays the receipt after saving it.
 5. Submit a fictional request from the Vercel preview. Match the receipt reference against the sheet and confirm the alert arrives. If mail delivery throws an error, the saved row is marked `Failed`. A `Pending` row may need checking against the Apps Script execution log.
 
-Email alerts contain a reference only. Contact information stays in the sheet. The Kenyt chatbot's separate lead form is managed by Kenyt.
+Email alerts contain a reference only. Contact information stays in the sheet. The contact page and the built-in chatbot share this integration.
+
+The chat can collect an optional city. If the script is already deployed, publish the updated script version. The existing eight-column layout is preserved, and an empty ninth header cell is populated with `City`.

@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import ClinicChatProvider from './clinic-chat-provider.jsx';
+import ClinicChat from './clinic-chat.jsx';
 import { flushSync } from 'react-dom';
 import { BrowserRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
 import catalog from './catalog.json';
 import fallbackStyle from './style.css?url';
+import './reference-motion.css';
 import ReferenceSite, { referencePage } from './reference-site.jsx';
 import { updatePageHead } from './blog-seo.js';
-import CaseGallery from './case-gallery.jsx';
 import { prepareReferencePage } from './reference-loading.js';
 import { useSiteMotion } from './site-motion.js';
 import { procedurePath } from './procedure-routes.js';
+import { normalizeSeoPath } from './seo-routes.js';
 
 const phone = '+919480281652';
 const displayPhone = '+91 94802 81652';
@@ -175,7 +176,9 @@ function App() {
   const item = catalog.guides.find(entry => entry.slug === guideSlug);
   const titles = { '/procedures': 'Cosmetic procedures', '/guides': 'Patient guides', '/about': 'Dr. Girish A C', '/clinic': 'Clinic and facilities', '/contact': 'Request a consultation', '/before-after': 'Treatment outcomes' };
   useEffect(() => {
-    document.title = (item?.title || titles[path] || 'Cosmetic Surgery Centre, Bengaluru') + ' | Curls & Curves';
+    if (document.head.querySelector('meta[name="seo-route"]')?.content !== normalizeSeoPath(pathname)) {
+      document.title = (item?.title || titles[path] || 'Cosmetic Surgery Centre, Bengaluru') + ' | Curls & Curves';
+    }
     window.scrollTo({ top: 0, behavior: 'instant' });
     if (key !== 'default' && !window.location.hash) document.getElementById('main')?.focus({ preventScroll: true });
     if (!window.IntersectionObserver || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -186,28 +189,27 @@ function App() {
     }), { threshold: 0.06 });
     document.querySelectorAll('[data-reveal]').forEach(element => observer.observe(element));
     return () => observer.disconnect();
-  }, [key, path]);
+  }, [key, path, pathname]);
   let page;
   if (item) page = <GuideDetail item={item} />;
   else if (path === '/' || path === '/index') page = <Home />;
   else if (path === '/guides') page = <GuideDirectory />;
   else if (path === '/about') page = <About />;
   else if (path === '/clinic') page = <Clinic />;
-  else if (path === '/before-after') page = <><PageLead label="Treatment outcomes" title="Discuss results with your surgeon" text="Ask the clinic about representative outcomes and what may be realistic for your individual circumstances." /><CaseGallery /><ConsultationBand /></>;
   else page = <><PageLead label="Page unavailable" title="We couldn’t find that page." /><section className="section"><div className="wrap"><Action to="/">Return home</Action></div></section></>;
   return <><Header /><main key={key} id="main" tabIndex={-1}>{page}</main><Footer /></>;
 }
 
-function RoutedSite({ initialPage }) {
+export function RoutedSite({ initialPage }) {
   const { pathname } = useLocation();
   useEffect(() => updatePageHead(pathname), [pathname]);
   const source = referencePage(pathname);
   return source ? <ReferenceSite key={pathname} source={source} initialPage={initialPage} /> : <><link rel="stylesheet" href={fallbackStyle} /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" /><App /></>;
 }
 
-function PreparedRoutes() {
+function PreparedRoutes({ initialPage }) {
   const location = useLocation();
-  const [displayed, setDisplayed] = useState({ location, page: null });
+  const [displayed, setDisplayed] = useState({ location, page: initialPage });
   useEffect(() => {
     const source = referencePage(location.pathname);
     if (location.pathname === displayed.location.pathname) {
@@ -240,4 +242,11 @@ function PreparedRoutes() {
   </Routes>;
 }
 
-createRoot(document.getElementById('root')).render(<BrowserRouter><PreparedRoutes /><ClinicChatProvider /></BrowserRouter>);
+async function mount() {
+  const root = document.getElementById('root');
+  const source = referencePage(window.location.pathname);
+  const initialPage = root.hasChildNodes() && source ? await prepareReferencePage(source).catch(() => null) : null;
+  createRoot(root).render(<BrowserRouter><PreparedRoutes initialPage={initialPage} /><ClinicChat /></BrowserRouter>);
+}
+
+if (typeof document !== 'undefined') mount();

@@ -52,6 +52,16 @@ export function answerClinicChat(message, previousProcedure) {
     if (/\b(?:cannot breathe|can t breathe|difficulty breathing|chest pain|heavy bleeding|uncontrolled bleeding|medical emergency)\b/.test(query)) {
       return { text: 'If you are experiencing these symptoms now, seek urgent medical help. For a possible emergency, contact your local emergency services. The website chat is unmonitored.' };
     }
+    if (/\b(?:awards?|affiliations?|accreditations?|iaaps|apsi|isaps)\b/.test(query)) {
+      return {
+        text: 'The clinic website lists these professional affiliations:',
+        items: [
+          'IAAPS — Indian Association of Aesthetic Plastic Surgeons',
+          'APSI — Association of Plastic Surgeons of India',
+          'ISAPS — International Society of Aesthetic Plastic Surgery',
+        ],
+      };
+    }
     if (/\b(?:address|location|directions|parking|map)\b/.test(query) || /\bwhere (?:are you|is the clinic|is curls|are you located)\b/.test(query)) {
       return { text: 'Curls & Curves is at #15, 8th Cross Road, MC Layout, Vijayanagar, Bengaluru 560040.', links: [maps, phone] };
     }
@@ -61,7 +71,10 @@ export function answerClinicChat(message, previousProcedure) {
     if (/\b(?:how much|price|pricing|cost|costs|charge|charges|fee|fees|package|insurance)\b/.test(query)) {
       return { text: found ? 'Please ask the clinic for an estimate for ' + found.title + ' after discussing your needs.' : 'Please ask the clinic for the current consultation fee or a procedure estimate.', links: [consultation, whatsapp] };
     }
-    if (/\b(?:book|booking|appointment|consultation|schedule|callback)\b/.test(query) && !/\b(?:cancel|reschedule)\b/.test(query)) {
+    if (/\bcall\s*back\b/.test(query)) {
+      return { text: 'Call the clinic or message us on WhatsApp to request a callback.', links: [phone, whatsapp] };
+    }
+    if (/\b(?:book|booking|appointment|consultation|schedule)\b/.test(query) && !/\b(?:cancel|reschedule)\b/.test(query)) {
       return { text: 'Use the consultation form to request a callback. The clinic can confirm an appointment time.', links: [consultation, whatsapp] };
     }
     if (/\b(?:contact|phone|call|number|whatsapp|human|staff|talk|email|cancel|reschedule)\b/.test(query)) {

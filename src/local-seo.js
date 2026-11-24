@@ -44,4 +44,3 @@ export const localPages = [
 ].map(page => ({ ...page, seoTitle: page.seoTitle || page.topics[0] + ' | Curls & Curves' }));
 
 export const findLocalPage = path => localPages.find(page => page.path === (path === '/index.php' ? '/' : path));
-export const localHtml = page => 'local-pages/' + (page.path.slice(1) || 'home') + '.html';

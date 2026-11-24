@@ -37,32 +37,11 @@ def save(image, key):
     image.save(output / (key + '.webp'), quality=91)
 
 
-for key, title, label, point in [
-    ('hairline', 'Hair transplantation', 'Scalp and hairline', (500, 249)),
-    ('male-hairline', 'Hairline and crown', 'Front hairline', (470, 247)),
-    ('female-scalp', 'Scalp hair thinning', 'Central scalp', (518, 223)),
-    ('eyebrow', 'Eyebrow transplantation', 'Eyebrow', (558, 325)),
-    ('beard', 'Beard transplantation', 'Jawline and beard area', (530, 480)),
-    ('moustache', 'Moustache transplantation', 'Upper lip', (533, 420)),
-    ('dimple', 'Dimple creation', 'Cheek', (570, 426)),
-]:
-    image, draw = canvas(title, 'Illustration of the area discussed during consultation')
-    head(draw)
-    x, y = point
-    draw.ellipse((x-23, y-20, x+23, y+20), fill='#e8a6bf', outline=pink, width=3)
-    callout(draw, label, (680, 420), point)
-    save(image, key)
-
-image, draw = canvas('FUE hair transplant', 'A follicular unit can contain one or more hairs')
-draw.rounded_rectangle((125, 329, 700, 506), 22, fill=skin, outline=outline, width=3)
-for x in (260, 464):
-    for shift in (-13, 13):
-        draw.line((x+shift-18, 240, x+shift+18, 431), fill=outline, width=5)
-        draw.ellipse((x+shift+9, 423, x+shift+28, 448), fill='#c16587')
-draw.rounded_rectangle((399, 231, 520, 486), 38, outline=pink, width=4)
-callout(draw, 'Individual follicular unit', (663, 235), (516, 255))
-callout(draw, 'Skin surface', (731, 389), (676, 329))
-save(image, 'fue')
+image, draw = canvas('Dimple creation', 'Illustration of the area discussed during consultation')
+head(draw)
+draw.ellipse((547, 406, 593, 446), fill='#e8a6bf', outline=pink, width=3)
+callout(draw, 'Cheek', (680, 420), (570, 426))
+save(image, 'dimple')
 
 image, draw = canvas('Lipoma', 'Illustration of a fatty lump beneath the skin')
 for y, color in ((237, '#dca6b7'), (310, '#f4d6c7'), (408, '#f5e2b5')):

@@ -5,12 +5,13 @@ function doPost(event) {
   const name = String(fields.name || '').trim();
   const phone = String(fields.phone || '').trim();
   const email = String(fields.email || '').trim();
+  const city = String(fields.city || '').trim();
   const topic = String(fields.topic || '').trim();
   const digits = phone.replace(/\D/g, '');
   if (!event || event.contentLength > 4096 || fields.website || fields.consent !== 'on' ||
       name.length < 2 || name.length > 80 || phone.length > 32 || !/^\+?[\d ()-]+$/.test(phone) ||
       digits.length < 7 || digits.length > 15 || !/^[a-z0-9-]{1,120}$/.test(topic) ||
-      email.length > 254 || (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
+      city.length > 80 || email.length > 254 || (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
     return receipt_('Please check your details', 'Go back, check your details and consent, then try again.');
   }
 
@@ -29,9 +30,15 @@ function doPost(event) {
     try {
       const book = SpreadsheetApp.openById(spreadsheetId);
       sheet = book.getSheetByName(tabName) || book.insertSheet(tabName);
-      if (!sheet.getLastRow()) sheet.appendRow(HEADERS);
+      if (!sheet.getLastRow()) sheet.appendRow([...HEADERS, 'City']);
       else if (String(sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0]) !== String(HEADERS)) return unavailable();
-      sheet.appendRow([new Date(), reference, literal_(name), literal_(phone), literal_(email), literal_(topic), 'Yes', 'Pending']);
+      else {
+        const cityHeader = sheet.getRange(1, HEADERS.length + 1);
+        const label = cityHeader.getValue();
+        if (!label) cityHeader.setValue('City');
+        else if (label !== 'City') return unavailable();
+      }
+      sheet.appendRow([new Date(), reference, literal_(name), literal_(phone), literal_(email), literal_(topic), 'Yes', 'Pending', literal_(city)]);
       SpreadsheetApp.flush();
     } finally {
       lock.releaseLock();

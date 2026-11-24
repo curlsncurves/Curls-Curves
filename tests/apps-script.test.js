@@ -14,7 +14,8 @@ function mockScript({ failEmail = false, failSheet = false } = {}) {
     appendRow: row => rows.push(row),
     getRange(row, column) {
       if (row === 'B:B') return { createTextFinder: () => ({ matchEntireCell: () => ({ findNext: () => ({ getRow: () => 2 }) }) }) };
-      if (row === 1) return { getValues: () => [rows[0]] };
+      if (row === 1) return { getValues: () => [rows[0].slice(0, 8)],
+        getValue: () => rows[0][column - 1] || '', setValue: value => { rows[0][column - 1] = value; } };
       return { setValue: value => { rows[row - 1][column - 1] = value; } };
     },
   };
@@ -35,10 +36,12 @@ function mockScript({ failEmail = false, failSheet = false } = {}) {
 
 test('Apps Script saves a literal sheet row and sends a reference-only alert', () => {
   const { submit, rows, alerts } = mockScript();
-  assert.match(submit(fields), /Request received.*test-reference/);
+  assert.match(submit({ ...fields, city: 'Bengaluru' }), /Request received.*test-reference/);
   assert.equal(rows[1][2], "'=Test");
   assert.equal(rows[1][3], "'+91 00000 00000");
   assert.equal(rows[1][7], 'Sent');
+  assert.equal(rows[0][8], 'City');
+  assert.equal(rows[1][8], "'Bengaluru");
   assert.equal(alerts.length, 1);
   assert.match(alerts[0][2], /test-reference/);
   assert.doesNotMatch(alerts[0][2], /example\.invalid|00000/);

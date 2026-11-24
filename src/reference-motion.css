@@ -1,111 +1,339 @@
-:root { --motion-ease: cubic-bezier(.22, .68, .24, 1); --motion-fast: 180ms; --motion-enter: 460ms; }
+:root {
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-spring: cubic-bezier(0.34, 1.35, 0.64, 1);
+  --motion-soft: cubic-bezier(0.25, 0.9, 0.3, 1);
+  --motion-fast: 200ms;
+  --motion-medium: 350ms;
+  --motion-enter: 550ms;
+}
 
 @media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Reading scroll progress indicator */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #c50050 0%, #e0adbf 50%, #523264 100%);
+    transform-origin: 0 50%;
+    transform: scaleX(var(--scroll-percent, 0));
+    z-index: 9999;
+    pointer-events: none;
+    transition: transform 60ms linear;
+  }
+
+  /* Entrance animations */
   .motion-hero-text, .motion-hero-image, [data-motion].motion-revealed {
     animation: motion-arrive var(--motion-enter) var(--motion-ease) var(--motion-delay, 0ms) both;
   }
-  .motion-hero-text { --motion-y: 12px; }
-  .motion-hero-image { --motion-scale: .985; --motion-start: .72; --motion-enter: 620ms; }
-  [data-motion="text"] { --motion-y: 9px; }
-  [data-motion="card"] { --motion-y: 8px; --motion-start: .82; }
-  [data-motion="image-left"] { --motion-x: 6px; --motion-scale: .99; }
-  [data-motion="image-right"] { --motion-x: -6px; --motion-scale: .99; }
-  [data-motion="article-image"] { --motion-scale: .99; --motion-start: .88; }
+  .motion-hero-text { --motion-y: 18px; }
+  .motion-hero-image { --motion-scale: .98; --motion-start: 0; --motion-enter: 680ms; --motion-y: 14px; }
+  [data-motion="text"] { --motion-y: 14px; --motion-start: 0; }
+  [data-motion="card"] { --motion-y: 18px; --motion-start: 0; --motion-scale: .985; }
+  [data-motion="image-left"] { --motion-x: 14px; --motion-scale: .985; --motion-start: 0; }
+  [data-motion="image-right"] { --motion-x: -14px; --motion-scale: .985; --motion-start: 0; }
+  [data-motion="article-image"] { --motion-scale: .985; --motion-start: 0; --motion-y: 12px; }
+
   @keyframes motion-arrive {
-    from { opacity: var(--motion-start, .72); translate: var(--motion-x, 0px) var(--motion-y, 0px); scale: var(--motion-scale, 1); }
-    to { opacity: 1; translate: none; scale: none; }
+    from {
+      opacity: var(--motion-start, 0);
+      translate: var(--motion-x, 0px) var(--motion-y, 0px);
+      scale: var(--motion-scale, 1);
+    }
+    to {
+      opacity: 1;
+      translate: none;
+      scale: none;
+    }
   }
 
+  /* Transformation & review slides */
   .reference-surface .t-slide.active,
   .reference-surface .t-slide-wrapper.active,
-  .reference-surface .review-slide.active,
-  .reference-surface .trans-content[style*="display: block"],
+  .reference-surface .review-slide.active {
+    animation: slide-crossfade 420ms var(--motion-ease) both;
+  }
+
+  @keyframes slide-crossfade {
+    from {
+      opacity: 0;
+      transform: scale(0.985) translateX(10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateX(0);
+    }
+  }
+
+  .reference-surface .trans-content[style*="display: block"] {
+    animation: motion-arrive 320ms var(--motion-ease) both;
+  }
+
+  /* Modal Booking Consultation Dialog */
+  .reference-surface .modal-overlay[style*="display: flex"] {
+    animation: modal-overlay-fade 280ms var(--motion-ease) both;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
   .reference-surface .modal-overlay[style*="display: flex"] .modal-content,
   #root dialog[open] {
-    animation: motion-arrive 270ms var(--motion-ease) both;
+    animation: modal-content-spring 360ms var(--motion-spring) both;
   }
 
-  .reference-surface .site-header { transition: box-shadow 260ms var(--motion-ease); }
-  .reference-surface .site-header.motion-header-scrolled { box-shadow: 0 4px 14px #0000000d; }
-  .reference-surface :is(.desktop-nav, .site-footer, .mobile-nav) a {
-    text-decoration-color: transparent;
-    text-underline-offset: .26em;
-    transition: color var(--motion-fast) ease, text-decoration-color 230ms ease;
+  @keyframes modal-overlay-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
-  .reference-surface :is(.desktop-nav, .site-footer, .mobile-nav) a:is(:hover, :focus-visible) {
-    text-decoration-line: underline;
-    text-decoration-color: currentColor;
+
+  @keyframes modal-content-spring {
+    from { opacity: 0; transform: scale(0.94) translateY(16px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
   }
+
+  /* Header sticky transition */
+  .reference-surface .site-header {
+    transition: box-shadow 320ms var(--motion-ease), background-color 320ms ease, backdrop-filter 320ms ease;
+  }
+  .reference-surface .site-header.motion-header-scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Desktop Nav link underlines */
+  .reference-surface .desktop-nav a {
+    position: relative;
+    text-decoration: none;
+    transition: color var(--motion-fast) ease;
+  }
+  .reference-surface .desktop-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #c50050;
+    transition: width 240ms var(--motion-ease), left 240ms var(--motion-ease);
+    border-radius: 2px;
+  }
+  .reference-surface .desktop-nav a:is(:hover, :focus-visible)::after {
+    width: 100%;
+    left: 0;
+  }
+
+  /* Icons and arrows */
   .reference-surface :is(.faq-icon, .m-icon, .sub-icon, .menu-toggle svg, .close-menu, .arrow) {
-    transition: transform 250ms var(--motion-ease), rotate 250ms var(--motion-ease);
+    transition: transform 280ms var(--motion-ease), rotate 280ms var(--motion-ease), color 200ms ease;
   }
-  .reference-surface .faq-item.active .faq-icon { rotate: 180deg; }
-  .reference-surface .menu-toggle[aria-expanded="true"] svg { rotate: 8deg; }
-  .reference-surface .faq-answer { transition-timing-function: var(--motion-ease); }
+  .reference-surface .faq-item.active .faq-icon {
+    rotate: 180deg;
+    color: #c50050;
+  }
+  .reference-surface .menu-toggle[aria-expanded="true"] svg {
+    rotate: 90deg;
+  }
 
-  .clinic-blog-card {
-    transition: transform 240ms var(--motion-ease), border-color 240ms ease, box-shadow 240ms ease;
+  /* FAQ Accordion Item active state */
+  .reference-surface .faq-item {
+    transition: background-color 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+    border-radius: 8px;
   }
-  .clinic-blog-card:focus-within {
+  .reference-surface .faq-item.active {
+    background-color: #fdf7fa;
+    border-color: #e5b2c6;
+    box-shadow: 0 4px 18px rgba(197, 0, 80, 0.05);
+  }
+  .reference-surface .faq-answer {
+    transition: opacity 300ms var(--motion-ease);
+  }
+
+  /* Primary Button Luxury Shimmer Effect */
+  #root :is(.btn-primary, .clinic-page-action, .button:not(.secondary), .case-reveal) {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(197, 0, 80, 0.22);
+    transition: transform var(--motion-fast) var(--motion-ease),
+                box-shadow var(--motion-fast) var(--motion-ease),
+                background-color var(--motion-fast) ease,
+                border-color var(--motion-fast) ease,
+                scale var(--motion-fast) var(--motion-ease);
+  }
+
+  #root :is(.btn-primary, .clinic-page-action, .button:not(.secondary), .case-reveal)::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -70%;
+    width: 25%;
+    height: 200%;
+    background: linear-gradient(
+      60deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(25deg);
+    pointer-events: none;
+    opacity: 0;
+    transition: transform 0.65s var(--motion-ease), opacity 0.3s ease;
+  }
+
+  #root :is(.btn-primary, .clinic-page-action, .button:not(.secondary), .case-reveal):hover::after {
+    opacity: 1;
+    transform: rotate(25deg) translate(520%, 0);
+  }
+
+  #root :is(.btn-primary, .clinic-page-action, .button:not(.secondary), .case-reveal):hover {
+    transform: translateY(-2.5px);
+    box-shadow: 0 10px 24px -4px rgba(197, 0, 80, 0.35), 0 4px 10px -2px rgba(197, 0, 80, 0.2);
+  }
+
+  #root :is(.btn-primary, .clinic-page-action, .button:not(.secondary), .case-reveal):active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 2px 8px rgba(197, 0, 80, 0.2);
+  }
+
+  /* Secondary & Tab buttons */
+  #root :is(.btn-secondary, .button.secondary, .tab-btn, .case-tabs button) {
+    transition: transform var(--motion-fast) var(--motion-ease),
+                background-color var(--motion-fast) ease,
+                border-color var(--motion-fast) ease,
+                color var(--motion-fast) ease,
+                box-shadow var(--motion-fast) ease;
+  }
+  #root :is(.btn-secondary, .button.secondary):hover {
+    transform: translateY(-2px);
+    background-color: #f7e8ef;
     border-color: #bc517c;
-    box-shadow: 0 6px 20px #64253c14;
   }
-  .clinic-blog-image img { transition: transform 380ms var(--motion-ease); }
-  .clinic-blog-read, .clinic-local-links a {
-    transition: color 180ms ease, text-underline-offset 180ms var(--motion-ease);
-  }
-  .clinic-blog-card a:focus-visible .clinic-blog-read,
-  .clinic-local-links a:focus-visible { text-underline-offset: .32em; }
-  .clinic-page-action {
-    transition: background-color 180ms ease, border-color 180ms ease, scale 180ms var(--motion-ease);
-  }
-  .clinic-page-action:active:not(:disabled) { scale: .98; }
-  .clinic-consultation-form :is(input, select) {
-    transition: border-color 180ms ease, box-shadow 180ms ease;
+  #root :is(.tab-btn, .case-tabs button).active {
+    background-color: #c50050;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(197, 0, 80, 0.25);
   }
 
-  #root :is(.btn-primary, .btn-secondary, .button, .tab-btn, .case-tabs button, .case-arrow, .case-reveal, .trans-arrow, .nav-arrow, .menu-toggle) {
-    transition: translate var(--motion-fast) var(--motion-ease), scale var(--motion-fast) var(--motion-ease),
-      color var(--motion-fast) ease, background-color var(--motion-fast) ease, border-color var(--motion-fast) ease,
-      box-shadow var(--motion-fast) ease, outline-offset var(--motion-fast) ease, transform var(--motion-fast) var(--motion-ease);
+  /* Arrow and slider navigation controls */
+  #root :is(.case-arrow, .trans-arrow, .nav-arrow) {
+    transition: transform var(--motion-fast) var(--motion-spring),
+                background-color var(--motion-fast) ease,
+                box-shadow var(--motion-fast) ease;
   }
-  #root :is(.btn-primary, .btn-secondary, .button, .tab-btn, .case-tabs button, .case-reveal, .menu-toggle):active { scale: .985; }
-  #root :is(.case-arrow, .trans-arrow, .nav-arrow):active { scale: .95; }
+  #root :is(.case-arrow, .trans-arrow, .nav-arrow):hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  }
+  #root :is(.case-arrow, .trans-arrow, .nav-arrow):active {
+    transform: scale(0.94);
+  }
+
+  /* Card Lift and Hover Elevation */
+  #root :is(.procedure-card, .feature-item, .journey-step, .why-card, .process-step, .type-card,
+            .blog-card, .latest-card, .more-card, .filter-card, .clinic-card, .related-card,
+            .accreditation-card, .directory > a, .clinic-blog-card, .clinic-page-card,
+            .education-details article, .timeline-item) {
+    transition: transform 340ms var(--motion-ease),
+                box-shadow 340ms var(--motion-ease),
+                border-color 300ms ease;
+    will-change: transform;
+  }
 
   @media (hover: hover) and (pointer: fine) {
-    .clinic-blog-card:hover {
-      transform: translateY(-3px);
-      border-color: #e0adbf;
-      box-shadow: 0 8px 24px #64253c14;
+    #root :is(.procedure-card, .feature-item, .journey-step, .why-card, .process-step, .type-card,
+              .blog-card, .latest-card, .more-card, .filter-card, .clinic-card, .related-card,
+              .accreditation-card, .directory > a, .clinic-blog-card, .clinic-page-card,
+              .education-details article, .timeline-item):hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 38px rgba(45, 18, 35, 0.11), 0 4px 12px rgba(197, 0, 80, 0.06);
+      border-color: #dfb2c4;
     }
-    .clinic-blog-card:hover img { transform: scale(1.035); }
-    .clinic-blog-card:hover .clinic-blog-read,
-    .clinic-local-links a:hover { text-underline-offset: .32em; }
-    .clinic-page-action:hover:not(:disabled) { background-color: #a60048; border-color: #a60048; }
-    #root :is(.procedure-card, .blog-card, .related-card, .type-card, .clinic-card, .directory > a) {
-      transition: transform 260ms var(--motion-ease), box-shadow 260ms var(--motion-ease), border-color 260ms ease;
+
+    #root :is(.procedure-card, .blog-card, .related-card, .type-card, .clinic-card, .clinic-blog-card) img {
+      transition: transform 600ms var(--motion-ease), filter 400ms ease;
     }
-    #root :is(.procedure-card, .blog-card, .related-card, .type-card, .clinic-card, .directory > a):hover { transform: translateY(-3px); }
-    #root :is(.procedure-card, .blog-card, .related-card, .type-card, .clinic-card) img { transition: scale 320ms var(--motion-ease), clip-path 320ms var(--motion-ease); clip-path: inset(0); }
-    #root :is(.procedure-card, .blog-card, .related-card, .type-card, .clinic-card):hover img { scale: 1.02; clip-path: inset(1%); }
-    .reference-surface :is(.btn-primary, .btn-secondary, .case-reveal):hover { translate: 0 -2px; }
-    .reference-surface :is(.text-link, .read-link, .case-all-link, .social-link) { transition: translate 220ms var(--motion-ease); }
-    .reference-surface :is(.text-link, .read-link, .case-all-link, .social-link):hover { translate: 2px 0; }
+    #root :is(.procedure-card, .blog-card, .related-card, .type-card, .clinic-card, .clinic-blog-card):hover img {
+      transform: scale(1.045);
+      filter: brightness(1.02);
+    }
+
+    .reference-surface :is(.text-link, .read-link, .case-all-link, .social-link, .clinic-blog-read) {
+      transition: transform 220ms var(--motion-ease), text-underline-offset 200ms ease;
+    }
+    .reference-surface :is(.text-link, .read-link, .case-all-link, .social-link, .clinic-blog-read):hover {
+      transform: translateX(4px);
+      text-underline-offset: 4px;
+    }
   }
 
+  /* Form Inputs Focus Transitions */
+  .clinic-consultation-form :is(input:not([type="checkbox"]), select) {
+    transition: border-color 220ms ease, box-shadow 220ms var(--motion-ease), transform 220ms var(--motion-ease);
+  }
+  .clinic-consultation-form :is(input:not([type="checkbox"]), select):focus {
+    border-color: #c50050;
+    box-shadow: 0 0 0 3px rgba(197, 0, 80, 0.15), 0 2px 6px rgba(0, 0, 0, 0.04);
+    transform: translateY(-1px);
+  }
+  .clinic-consultation-consent input {
+    transition: transform 180ms var(--motion-spring);
+  }
+  .clinic-consultation-consent input:hover {
+    transform: scale(1.15);
+  }
+
+  /* Dropdown Menus Smooth Transitions */
   @supports (transition-behavior: allow-discrete) {
     .reference-surface :is(.dropdown-menu-level1, .dropdown-menu-level2, .mobile-drop-content, .mobile-sub-content) {
-      opacity: 0; translate: 0 -4px;
-      transition: opacity 170ms ease, translate 220ms var(--motion-ease), display 220ms allow-discrete;
+      opacity: 0;
+      translate: 0 -6px;
+      transition: opacity 200ms ease, translate 240ms var(--motion-ease), display 240ms allow-discrete;
     }
     .reference-surface :is(.nav-dropdown-hierarchical:hover > .dropdown-menu-level1, .dropdown-submenu:hover > .dropdown-menu-level2,
-      .mobile-dropdown.active > .mobile-drop-content, .mobile-sub-dropdown.active > .mobile-sub-content) { opacity: 1; translate: none; }
+      .mobile-dropdown.active > .mobile-drop-content, .mobile-sub-dropdown.active > .mobile-sub-content) {
+      opacity: 1;
+      translate: none;
+    }
     @starting-style {
       .reference-surface :is(.nav-dropdown-hierarchical:hover > .dropdown-menu-level1, .dropdown-submenu:hover > .dropdown-menu-level2,
-        .mobile-dropdown.active > .mobile-drop-content, .mobile-sub-dropdown.active > .mobile-sub-content) { opacity: 0; translate: 0 -4px; }
+        .mobile-dropdown.active > .mobile-drop-content, .mobile-sub-dropdown.active > .mobile-sub-content) {
+        opacity: 0;
+        translate: 0 -6px;
+      }
     }
     .reference-surface :is(.dropdown-menu-level1, .dropdown-menu-level2) { pointer-events: none; }
     .reference-surface :is(.nav-dropdown-hierarchical:hover > .dropdown-menu-level1, .dropdown-submenu:hover > .dropdown-menu-level2) { pointer-events: auto; }
+  }
+
+  /* View Transitions */
+  ::view-transition-old(root) {
+    animation: vt-fade-out 250ms var(--motion-ease) both;
+  }
+  ::view-transition-new(root) {
+    animation: vt-fade-in 250ms var(--motion-ease) both;
+  }
+  @keyframes vt-fade-out {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.99); }
+  }
+  @keyframes vt-fade-in {
+    from { opacity: 0; transform: scale(1.01); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .reference-surface .mobile-nav {
+    transition-timing-function: var(--motion-ease);
+  }
+  .reference-surface .mobile-nav.open .close-menu {
+    rotate: 90deg;
+  }
+  .reference-surface .mobile-nav-overlay {
+    transition-timing-function: var(--motion-ease);
   }
 }
 
@@ -116,6 +344,9 @@
     transition-duration: .01ms !important;
     transition-delay: 0ms !important;
     scroll-behavior: auto !important;
+  }
+  body::before {
+    display: none !important;
   }
 }
 
@@ -128,15 +359,6 @@
   align-content: center;
   font-size: .85rem;
 }
-.reference-image-missing:not(.t-slide) { display: block; }
-
-
-@media (prefers-reduced-motion: no-preference) {
-  ::view-transition-old(root), ::view-transition-new(root) {
-    animation-duration: 240ms;
-    animation-timing-function: var(--motion-ease);
-  }
-  .reference-surface .mobile-nav { transition-timing-function: var(--motion-ease); }
-  .reference-surface .mobile-nav.open .close-menu { rotate: 90deg; }
-  .reference-surface .mobile-nav-overlay { transition-timing-function: var(--motion-ease); }
+.reference-image-missing:not(.t-slide) {
+  display: block;
 }

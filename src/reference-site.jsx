@@ -9,14 +9,22 @@ import { prepareReferencePage } from './reference-loading.js';
 import missingImages from './missing-reference-images.json';
 import ClinicPage, { brandedPage } from './clinic-pages.jsx';
 import ConsultationForm from './consultation-form.jsx';
+import LocalCaseGallery from './local-case-gallery.jsx';
 import { catalogProcedure, procedureForPublishedPath, procedurePath } from './procedure-routes.js';
 import { findLocalPage, localPages } from './local-seo.js';
-import CaseGallery, { caseProcedure } from './case-gallery.jsx';
+import { canonicalPath, normalizeSeoPath } from './seo-routes.js';
 import ProcedureEducation from './procedure-education.jsx';
 import { educationFor, rhinoplastyFaq, rhinoplastySource } from './procedure-education.js';
 
 const unavailableImages = new Set(missingImages);
 const placeholderOverview = 'Discuss treatment options, suitability and recovery with the clinic.';
+function isProminentImage(node) {
+  for (let parent = node; parent; parent = parent.parent) {
+    const classes = parent.attribs?.class || '';
+    if (parent.name === 'header' || /(?:^|\s)(?:[\w-]+-)?hero(?:-[\w-]+)?(?:\s|$)/.test(classes)) return true;
+  }
+  return false;
+}
 function nodeText(node) {
   return node.data || (node.children || []).map(nodeText).join('');
 }
@@ -25,7 +33,7 @@ export function referencePage(path) {
   if (brandedPage(path)) return '/reference-site/clinic-page-shell.json';
   const item = catalogProcedure(path);
   if (item) return routes[procedurePath(item.slug)];
-  return routes[path] || routes[path.replace(/\/$/, '')] || routes[path + '/'];
+  return routes[path] || routes[normalizeSeoPath(path)] || routes[canonicalPath(path)];
 }
 
 const sectionLinks = {
@@ -46,6 +54,20 @@ function moveSlide(container, selector, direction, display = false, absolute = f
   });
 }
 
+const galleryAnchors = {
+  'rhinoplasty-results': 'rhino', 'facelift-results': 'face', 'breast-results': 'breast',
+  'liposuction-results': 'lipo', 'tummy-results': 'tummy', 'eyelid-results': 'eyelid',
+};
+
+function selectTransformation(section, id) {
+  section?.querySelectorAll('.trans-content').forEach(panel => { panel.style.display = panel.id === id ? 'block' : 'none'; });
+  section?.querySelectorAll('.tab-btn').forEach(button => {
+    const active = button.dataset.originalAction === `showTransTab('${id}', this)`;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+}
+
 export default function ReferenceSite({ source, initialPage }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -54,8 +76,6 @@ export default function ReferenceSite({ source, initialPage }) {
   const contentPath = catalogItem ? procedurePath(catalogItem.slug) : location.pathname;
   const localPage = findLocalPage(contentPath.replace(/\/$/, '') || '/');
   const pageTitle = localPage?.seoTitle || branded?.article?.seoTitle || (branded ? branded.title + ' | Curls & Curves' : null);
-  const mainGallery = caseProcedure(location.pathname) === '';
-  const procedure = caseProcedure(location.pathname);
   const surface = useRef(null);
   const trigger = useRef(null);
   const [content, setContent] = useState(initialPage || null);
@@ -73,17 +93,25 @@ export default function ReferenceSite({ source, initialPage }) {
 
   useEffect(() => {
     if (!content) return;
-    document.title = pageTitle || content.title;
+    if (document.head.querySelector('meta[name="seo-route"]')?.content !== normalizeSeoPath(location.pathname)) {
+      document.title = pageTitle || content.title;
+    }
     document.body.className = content.bodyClass;
     return () => { document.body.className = ''; };
-  }, [content, pageTitle]);
+  }, [content, location.pathname, pageTitle]);
 
   useEffect(() => {
     if (!content) return;
     const id = location.hash.slice(1);
-    if (id) document.getElementById(id)?.scrollIntoView();
+    if (id) {
+      const tab = Object.hasOwn(galleryAnchors, id) ? galleryAnchors[id] : null;
+      const featured = surface.current?.querySelector('#featured-transformations');
+      if (tab && featured) selectTransformation(featured, tab);
+      const target = document.getElementById(id) ?? (tab || id === 'procedure-galleries' || id === 'results' ? featured : null);
+      target?.scrollIntoView();
+    }
     else window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [content, location.pathname, location.hash]);
+  }, [content, location.pathname, location.hash, location.key]);
 
   function close() {
     const root = surface.current;
@@ -140,11 +168,7 @@ export default function ReferenceSite({ source, initialPage }) {
     const review = action.match(/^changeReview\((-?1)\)$/);
     const service = action.match(/^(move|goTo)ServiceSlide\((-?\d+)\)$/);
     if (tab) {
-      root.querySelectorAll('.trans-content').forEach(panel => { panel.style.display = panel.id === tab[1] ? 'block' : 'none'; });
-      root.querySelectorAll('.tab-btn').forEach(button => {
-        button.classList.toggle('active', button === target);
-        button.setAttribute('aria-pressed', String(button === target));
-      });
+      selectTransformation(target.closest('.transformations-section'), tab[1]);
     } else if (arrows) {
       const gallery = arrows[1] === 'Ba';
       moveSlide(root.querySelector('#' + arrows[2] + (gallery ? '-slider' : '')), gallery ? '.t-slide-wrapper' : '.t-slide', Number(arrows[3]), gallery);
@@ -189,6 +213,7 @@ export default function ReferenceSite({ source, initialPage }) {
       }}>
       {parse(content.html, { replace(node, index) {
         if (!node.attribs) return;
+        if (node.attribs.class?.split(' ').includes('accreditations-section')) node.attribs.id ??= 'accreditations';
         if (node.name === 'img' && unavailableImages.has(node.attribs.src)) {
           const alt = node.attribs.alt;
           const replacement = fillNoseFaq && alt === 'Revision Rhinoplasty' ? '/reference-site/e49fc7fc530d13c5b48b.webp'
@@ -234,6 +259,9 @@ export default function ReferenceSite({ source, initialPage }) {
           return <ConsultationForm key={index} procedure={(catalogItem || procedureForPublishedPath(contentPath))?.slug} />;
         }
       }, transform(element, node, index) {
+        if (node.attribs?.id === 'featured-transformations') {
+          return <React.Fragment key={index}><LocalCaseGallery />{element}</React.Fragment>;
+        }
         if (localPage?.path === '/' && node.name === 'footer' && node.attribs?.class?.split(' ').includes('site-footer')) {
           return <React.Fragment key={index}>
             <section className="container clinic-local-links" aria-labelledby="clinic-local-title">
@@ -249,9 +277,7 @@ export default function ReferenceSite({ source, initialPage }) {
           return <React.Fragment key={index}><ClinicPage page={branded} />{element}</React.Fragment>;
         }
         if (education && node.name === 'main' && nodeText(node).includes(placeholderOverview)) {
-          return <main key={index}><ProcedureEducation title={content.title.split(' | ')[0]} entry={education} />
-            {procedure && <CaseGallery procedure={procedure} />}
-          </main>;
+          return <main key={index}><ProcedureEducation title={content.title.split(' | ')[0]} entry={education} /></main>;
         }
         if (fillNoseFaq && node.attribs?.class?.split(' ').includes('faq-answer') &&
             nodeText(node).includes('Answer will be updated shortly.')) {
@@ -262,16 +288,6 @@ export default function ReferenceSite({ source, initialPage }) {
         if (fillNoseFaq && node.attribs.id === 'faqs') {
           return React.cloneElement(element, undefined, element.props.children,
             <p key="faq-source" className="education-faq-source"><a href={rhinoplastySource[1]}>{rhinoplastySource[0]}</a></p>);
-        }
-        const classes = (node.attribs.class || '').split(' ');
-        if (mainGallery && classes.includes('ba-all-results')) {
-          return <React.Fragment key={index}><CaseGallery />{element}</React.Fragment>;
-        }
-        if (procedure && node.attribs.id === 'results' && classes.includes('service-transformations-section')) {
-          return React.cloneElement(element, undefined, element.props.children, <CaseGallery key="case-gallery" procedure={procedure} />);
-        }
-        if (procedure && !content.html.includes('id="results"') && classes.includes('testimonials-section')) {
-          return <React.Fragment key={index}><CaseGallery procedure={procedure} />{element}</React.Fragment>;
         }
         return element;
       } })}

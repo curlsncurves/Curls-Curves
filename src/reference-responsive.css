@@ -42,10 +42,9 @@
   .reference-surface .transformation-tabs .tab-btn { min-height: 44px; white-space: normal; }
   .reference-surface .fixed-bottom-bar { padding-bottom: env(safe-area-inset-bottom); background: #fff; }
   #root:has(.fixed-bottom-bar) .clinic-chat { --chat-bottom-bar: 58px; }
-  body:has(.fixed-bottom-bar) > #kenytChatBubble {
-    bottom: calc(52px + env(safe-area-inset-bottom)) !important;
-  }
 }
 @media (max-width: 460px) {
   .reference-surface .s-why-grid { grid-template-columns: minmax(0, 1fr); }
 }
+.reference-surface #featured-transformations { scroll-margin-top: 85px; }
+.reference-surface #featured-transformations .transformation-tabs { flex-wrap: wrap; overflow: visible; }

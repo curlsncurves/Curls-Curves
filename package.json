@@ -3,15 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "node server/index.js --dev",
+    "dev": "vite --host 127.0.0.1 --port 4173",
     "build": "vite build",
-    "start": "node server/index.js",
-    "preview:cases": "node server/index.js --local-case-gallery",
+    "sync:routes": "node tools/sync-seo-routes.js",
+    "check:seo": "node tools/check-seo.js",
+    "start": "vite preview --host 127.0.0.1 --port 4173",
+    "preview:gallery": "vite preview --mode gallery --host 127.0.0.1 --port 4173",
     "test": "node --test"
   },
   "type": "module",
   "dependencies": {
-    "express": "^5.3.0",
     "html-react-parser": "^6.1.10",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",

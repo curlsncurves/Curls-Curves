@@ -3,37 +3,54 @@
 .clinic-new-page h1 { font-size: clamp(2.2rem, 5.6vw, 4.2rem); }
 .clinic-page-lead h1 + p { color: #51414b; margin: 12px 0 0; }
 .clinic-new-page .clinic-contact-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: start; gap: clamp(24px, 4vw, 56px); padding-block: clamp(28px, 5vw, 56px); }
-.clinic-page-card { border: 1px solid #eddbe3; border-radius: 13px; background: #fffafc; padding: clamp(18px, 3vw, 34px); }
+.clinic-page-card { border: 1px solid #eddbe3; border-radius: 13px; background: #fffafc; padding: clamp(18px, 3vw, 34px); box-shadow: 0 4px 16px rgba(100, 37, 60, 0.05); transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease, border-color 300ms ease; }
+.clinic-page-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(100, 37, 60, 0.1); border-color: #dfb2c4; }
 .clinic-page-card h2 { margin: 0 0 14px; }
 .clinic-page-card address { font-style: normal; }
 .clinic-page-card a { overflow-wrap: anywhere; }
 .clinic-contact-links { list-style: none; padding: 0; margin: 12px 0 0; }
 .clinic-contact-links li { margin: 6px 0; }
-.clinic-contact-links a:not(.clinic-page-action), .clinic-text-link, .clinic-article > a:not(.clinic-page-action), .clinic-blog-read { color: #a00043; text-underline-offset: 3px; }
+.clinic-contact-links a:not(.clinic-page-action), .clinic-text-link, .clinic-article > a:not(.clinic-page-action), .clinic-blog-read { color: #a00043; text-underline-offset: 3px; transition: color 200ms ease, transform 200ms ease, text-underline-offset 200ms ease; }
+.clinic-contact-links a:not(.clinic-page-action):hover, .clinic-text-link:hover, .clinic-article > a:not(.clinic-page-action):hover, .clinic-blog-read:hover { color: #c50050; text-underline-offset: 5px; }
 .clinic-consultation-form { display: grid; gap: 11px; margin: 0; }
-.clinic-consultation-form label { display: grid; gap: 5px; font-size: .9rem; font-weight: 600; }
-.clinic-consultation-form :is(input:not([type="checkbox"]), select) { display: block; box-sizing: border-box; width: 100%; min-width: 0; min-height: 44px; padding: 8px 10px; border: 1px solid #dbb4c5; border-radius: 7px; background: #fff; color: #242024; font: inherit; font-size: 16px; }
-.clinic-consultation-form .clinic-consultation-consent { display: flex; align-items: flex-start; gap: 8px; font-weight: 400; }
-.clinic-consultation-consent input { margin-top: 3px; accent-color: #c50050; }
-.clinic-consultation-form [role="alert"] { margin: 0; color: #982538; }
-.clinic-form-receipt { overflow-wrap: anywhere; }
-.clinic-page-action { display: inline-flex; align-items: center; justify-self: start; min-height: 44px; padding: 10px 15px; background: #c50050; color: #fff; border: 1px solid #c50050; border-radius: 7px; text-decoration: none; font: inherit; font-weight: 700; cursor: pointer; }
+.clinic-consultation-form fieldset { display: grid; gap: 11px; margin: 0; padding: 0; border: 0; min-width: 0; }
+.clinic-consultation-form label { display: grid; gap: 5px; font-size: .9rem; font-weight: 600; color: #2e2329; }
+.clinic-consultation-form :is(input:not([type="checkbox"]), select) { display: block; box-sizing: border-box; width: 100%; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid #dbb4c5; border-radius: 8px; background: #fff; color: #242024; font: inherit; font-size: 16px; transition: border-color 220ms ease, box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1), transform 220ms cubic-bezier(0.16, 1, 0.3, 1); }
+.clinic-consultation-form :is(input:not([type="checkbox"]), select):focus { outline: none; border-color: #c50050; box-shadow: 0 0 0 3px rgba(197, 0, 80, 0.16), 0 2px 8px rgba(0, 0, 0, 0.05); transform: translateY(-1px); }
+.clinic-consultation-form .clinic-consultation-consent { display: flex; align-items: flex-start; gap: 8px; font-weight: 400; cursor: pointer; }
+.clinic-consultation-consent input { margin-top: 3px; accent-color: #c50050; width: 18px; height: 18px; cursor: pointer; transition: transform 200ms cubic-bezier(0.34, 1.4, 0.64, 1); }
+.clinic-consultation-consent:hover input { transform: scale(1.15); }
+.clinic-consultation-form [role="alert"] { margin: 0; color: #982538; animation: form-alert-drop 280ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes form-alert-drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+.clinic-form-receipt { overflow-wrap: anywhere; animation: form-alert-drop 350ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.clinic-form-notice { padding: 14px 16px; border: 1px solid #eddbe3; border-radius: 10px; background: #fff5f9; box-shadow: 0 4px 14px rgba(100, 37, 60, 0.06); }
+.clinic-form-notice p { margin: 0 0 6px; }
+.clinic-form-notice > div { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.clinic-form-notice a { color: #a00043; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; transition: color 180ms ease; }
+.clinic-form-notice a:hover { color: #c50050; }
+.clinic-page-action { position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-self: start; min-height: 44px; padding: 11px 18px; background: #c50050; color: #fff; border: 1px solid #c50050; border-radius: 8px; text-decoration: none; font: inherit; font-weight: 700; cursor: pointer; box-shadow: 0 4px 14px rgba(197, 0, 80, 0.22); transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease, background-color 200ms ease; }
+.clinic-page-action:hover:not(:disabled) { background: #9e0042; transform: translateY(-2px); box-shadow: 0 8px 22px rgba(197, 0, 80, 0.35); }
+.clinic-page-action:active:not(:disabled) { transform: translateY(1px) scale(0.98); box-shadow: 0 2px 8px rgba(197, 0, 80, 0.2); }
 .clinic-page-action:disabled { opacity: .58; cursor: default; }
 .clinic-new-page .clinic-blog-grid { padding-block: 44px 64px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.clinic-blog-card { overflow: hidden; border: 1px solid #efdae4; border-radius: 12px; background: #fffafc; }
+.clinic-blog-card { overflow: hidden; border: 1px solid #efdae4; border-radius: 12px; background: #fffafc; box-shadow: 0 4px 16px rgba(100, 37, 60, 0.04); transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 320ms ease, border-color 300ms ease; }
+.clinic-blog-card:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(100, 37, 60, 0.12); border-color: #dfb2c4; }
 .clinic-blog-card a { display: block; height: 100%; color: inherit; text-decoration: none; }
 .clinic-blog-card a:focus-visible { outline: 2px solid #a00043; outline-offset: -3px; border-radius: inherit; }
 .clinic-blog-image { display: block; overflow: hidden; }
-.clinic-blog-card img { width: 100%; height: auto; aspect-ratio: 3/2; display: block; object-fit: cover; }
-.clinic-blog-card a > div { padding: 15px 18px 18px; }
+.clinic-blog-card img { width: 100%; height: auto; aspect-ratio: 3/2; display: block; object-fit: cover; transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1); }
+.clinic-blog-card:hover img { transform: scale(1.05); }
+.clinic-blog-card a > div { padding: 16px 20px 20px; }
 .clinic-page-category { color: #a00043; font-size: .78rem; margin: 0 0 9px; font-weight: 750; letter-spacing: .045em; text-transform: uppercase; }
-.clinic-blog-card h2 { margin: 0 0 12px; font-size: clamp(1.15rem, 2vw, 1.65rem); }
-.clinic-blog-read { text-decoration: underline; font-weight: 600; }
+.clinic-blog-card h2 { margin: 0 0 12px; font-size: clamp(1.15rem, 2vw, 1.65rem); transition: color 200ms ease; }
+.clinic-blog-card:hover h2 { color: #a00043; }
+.clinic-blog-read { text-decoration: underline; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
 .clinic-new-page .clinic-article { width: min(820px, calc(100% - 36px)); padding-block: 44px 65px; }
 .clinic-article > .clinic-page-category { margin-top: 20px; }
 .clinic-article-status, .clinic-article figcaption { color: #655761; font-size: .87rem; margin-top: 8px; }
 .clinic-article figure { margin: 22px 0; }
-.clinic-article figure img { width: 100%; height: auto; border-radius: 12px; }
+.clinic-article figure img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); transition: transform 400ms ease; }
+.clinic-article figure:hover img { transform: scale(1.015); }
 .clinic-article p { line-height: 1.75; }
 .clinic-article section { margin: 24px 0; }
 .clinic-article section h2 { margin-bottom: 8px; }
@@ -49,13 +66,14 @@
   margin: 0;
   padding: 0;
 }
-.clinic-local-links a { color: #aa0049; text-decoration: underline; text-underline-offset: .18em; }
+.clinic-local-links a { color: #aa0049; text-decoration: underline; text-underline-offset: .18em; transition: color 200ms ease, transform 200ms ease; display: inline-block; }
+.clinic-local-links a:hover { color: #c50050; transform: translateX(3px); }
 .clinic-new-page .clinic-directory { padding-block: clamp(26px, 5vw, 56px); }
 .clinic-directory-filters { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); max-width: 620px; }
 .clinic-directory-count { margin: 18px 0 12px; }
 .clinic-directory-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.clinic-directory-grid a { display: block; color: inherit; text-decoration: none; overflow-wrap: anywhere; }
-.clinic-directory-grid a:is(:hover, :focus-visible) { border-color: #c50050; }
+.clinic-directory-grid a { display: block; color: inherit; text-decoration: none; overflow-wrap: anywhere; border: 1px solid #eddbe3; border-radius: 10px; padding: 18px; background: #fffafc; box-shadow: 0 3px 12px rgba(100, 37, 60, 0.04); transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1), border-color 260ms ease, box-shadow 260ms ease; }
+.clinic-directory-grid a:is(:hover, :focus-visible) { border-color: #c50050; transform: translateY(-4px); box-shadow: 0 10px 24px rgba(197, 0, 80, 0.12); }
 .clinic-directory-grid h2 { margin: 0; font-size: clamp(1.2rem, 2.1vw, 1.75rem); }
 @media (max-width: 780px) {
   .clinic-directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -67,4 +85,5 @@
 .clinic-procedure-questions + a { display: inline-block; margin-top: 14px; }
 .clinic-procedure-actions { display: grid; justify-items: start; gap: 12px; }
 .container.clinic-procedure-back { padding-block: 20px 44px; }
-.clinic-procedure-back a { color: #a00043; text-underline-offset: 3px; }
+.clinic-procedure-back a { color: #a00043; text-underline-offset: 3px; transition: color 180ms ease, transform 180ms ease; display: inline-block; }
+.clinic-procedure-back a:hover { color: #c50050; transform: translateX(-3px); }

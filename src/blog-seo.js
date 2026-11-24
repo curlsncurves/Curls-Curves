@@ -1,7 +1,7 @@
 import articles from './blogs.json' with { type: 'json' };
 import { findLocalPage } from './local-seo.js';
+import { canonicalPath, normalizeSeoPath, seoPaths, siteOrigin as siteUrl } from './seo-routes.js';
 
-const siteUrl = 'https://curlsncurves.com';
 const defaultDescription = 'Explore cosmetic surgery procedures and request a consultation with Curls & Curves in Vijayanagar, Bengaluru.';
 
 export const blogPath = article => '/blog/' + article.slug;
@@ -32,16 +32,19 @@ export function localHead(page) {
 }
 
 export function updatePageHead(path) {
-  const normalized = path.replace(/\/$/, '') || '/';
-  const article = findArticle(normalized);
-  const localPage = findLocalPage(normalized);
+  const normalized = normalizeSeoPath(path);
+  if (document.head.querySelector('meta[name="seo-route"]')?.content === normalized) return;
+  const canonical = canonicalPath(normalized);
+  const article = findArticle(canonical);
+  const localPage = findLocalPage(canonical);
   const previous = document.head.querySelectorAll('[data-page-head], meta[name="description"]');
   const entries = article ? articleHead(article)
     : localPage ? localHead(localPage)
       : [['meta', { name: 'description', content: defaultDescription }]];
+  if (!article && !localPage && seoPaths.includes(normalized)) entries.push(['link', { rel: 'canonical', href: siteUrl + canonical }]);
   for (const [tag, attributes] of entries) {
     const node = document.createElement(tag);
-    if (article || localPage) node.setAttribute('data-page-head', '');
+    node.setAttribute('data-page-head', '');
     for (const [name, value] of Object.entries(attributes)) node.setAttribute(name, value);
     document.head.append(node);
   }

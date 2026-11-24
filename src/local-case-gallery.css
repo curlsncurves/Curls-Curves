@@ -1,0 +1,17 @@
+.local-case-gallery { background: #fff4f8; padding-block: clamp(30px, 5vw, 60px); scroll-margin-top: 88px; }
+.local-case-heading { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: end; justify-content: space-between; margin-bottom: 20px; }
+.local-case-heading h2 { font: 700 clamp(1.65rem, 4vw, 2.3rem)/1.2 "Playfair Display", Georgia, serif; margin-bottom: 8px; }
+.local-case-heading label { display: grid; gap: 4px; min-width: 0; max-width: 100%; font-weight: 600; }
+.local-case-heading select { max-width: 100%; min-height: 44px; padding: 6px 10px; background: white; color: #271c26; border: 1px solid #d4b0c1; border-radius: 8px; font: inherit; }
+.local-case-stage { display: grid; place-items: center; text-align: center; gap: 22px; padding: clamp(14px, 4vw, 32px); background: white; border: 1px solid #ead7df; border-radius: 14px; }
+.local-case-stage h3 { font-size: clamp(1.1rem, 3vw, 1.65rem); }
+.local-case-gate { padding-block: clamp(20px, 5vw, 65px); }
+.local-case-gate p { margin-bottom: 10px; }
+.local-case-photos { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; width: 100%; }
+.local-case-photos figure { flex: 1 1 220px; max-width: 580px; min-width: 0; margin: 0; }
+.local-case-photos img { width: 100%; height: auto; max-height: 520px; object-fit: contain; }
+.local-case-photos figcaption, .local-case-disclaimer { font-size: .85rem; color: #655761; }
+.local-case-disclaimer { margin-top: 12px; }
+.local-case-controls { display: flex; align-items: center; gap: 12px; }
+.local-case-controls button { width: 44px; height: 44px; border: 1px solid #e9c5d4; border-radius: 50%; color: #a00043; background: white; font: 1.7rem/1 system-ui, sans-serif; cursor: pointer; }
+.local-case-controls button:disabled { opacity: .45; cursor: default; }

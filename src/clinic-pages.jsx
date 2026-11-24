@@ -4,7 +4,6 @@ import articles from './blogs.json';
 import catalog from './catalog.json';
 import { blogPath, findArticle } from './blog-seo.js';
 import ConsultationForm from './consultation-form.jsx';
-import CaseGallery, { caseProcedure } from './case-gallery.jsx';
 import ProcedureEducation from './procedure-education.jsx';
 import { educationFor } from './procedure-education.js';
 import { catalogProcedure, procedurePath } from './procedure-routes.js';
@@ -79,7 +78,6 @@ function ProcedureDetail({ item }) {
         </aside>
       </section>
     </>}
-    <CaseGallery procedure={caseProcedure('/procedure/' + item.slug)} />
     <div className="container clinic-procedure-back"><Link to="/procedures">View all procedures</Link></div>
   </main>;
 }
